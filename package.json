@@ -1,17 +1,22 @@
 {
   "name": "BudgetManager",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicacion de Manejo de Presupuesto",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Athroscf/ManejoPresuspuesto.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongoose",
+    "handlebars"
+  ],
+  "author": "Christopher Fiallos",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Athroscf/ManejoPresuspuesto/issues"
@@ -20,5 +25,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
   }
 }
