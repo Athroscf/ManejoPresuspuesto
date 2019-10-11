@@ -1,18 +1,22 @@
 const express = require("express");
 const expresshbs = require("express-handlebars");
 const router = require("./routes/index");
+const path = require("path");
 
 const app = express();
 
-// Habilitar handlebarse como template engine
+// Habilitar handlebars como template engine
 app.engine(
-    "Handlebars",
+    "handlebars",
     expresshbs({
         defaultLayout: "layout"
     })
 );
 
 app.set("view engine", "handlebars");
+
+// Definir ruta para archivos estaticos
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", router());
 
