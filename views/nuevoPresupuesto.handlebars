@@ -7,6 +7,13 @@
             <input type="text" name="titulo" placeholder="">
         </div>
 
+        <div class="campo descripcion">
+            {{!-- Implementar un WYSIWYG --}}
+            <label>Descripción</label>
+            <input type="hidden" name="descripcion" id="x">
+            <trix-editor input="x"></trix-editor>
+        </div>
+
         <div class="campo">
             <label for="ingresos">Ingresos</label>
             <input type="number" name="ingresos" placeholder="30000">
