@@ -18,10 +18,6 @@ const presupuestoSchema = new mongoose.Schema({
         type: Number,
         required: "Es necesario ingresar la cantidad que espera ahorrar"
     },
-    // gastosEsperados: {
-    //     type: Number,
-    //     required: "Es necesario que ingrese lo que espera gastar en este presupuesto"
-    // },
     gastos: [
         {
             nombreGasto: String,

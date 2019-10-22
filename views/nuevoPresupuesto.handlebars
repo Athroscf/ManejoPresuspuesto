@@ -7,13 +7,6 @@
             <input type="text" name="titulo" placeholder="">
         </div>
 
-        <div class="campo descripcion">
-            {{!-- Implementar un WYSIWYG --}}
-            <label>Descripción</label>
-            <input type="hidden" name="descripcion" id="x">
-            <trix-editor input="x"></trix-editor>
-        </div>
-
         <div class="campo">
             <label for="ingresos">Ingresos</label>
             <input type="number" name="ingresos" placeholder="30000">
@@ -23,23 +16,19 @@
             <input type="number" name="ahorrosEsperados" placeholder="10000">
         </div>
 
-        <h3>Gastos</h3>
-        <h4>Servicios Publicos</h4>
-        <input class="btn-agregar btn-azul" type="button" id="btnServiciosPublicos" value="+">
-
-        <h4>Otros gastos</h4>
-        <input class="btn-agregar btn-azul" type="button" id="btnOtrosGastos" value="+">
+        <h3>Gastos</h3>        
+        <input class="btn-agregar btn-azul" type="button" id="btnGastos" value="+">
 
         <input class="btn btn-verde" type="submit" value="Agregar Presupuesto">
         
         <script>
-            document.getElementById("btnServiciosPublicos").addEventListener("click", function() {
+            document.getElementById("btnGastos").addEventListener("click", function() {
                 var divCaja = document.createElement("div");
                 divCaja.setAttribute("class", "campo");
                 divCaja.setAttribute("id", "divInput");
 
                 var labelName = document.createElement("label");
-                var labelNameContent = document.createTextNode("Servicio Publico");
+                var labelNameContent = document.createTextNode("Descripcion");
                 labelName.setAttribute("for", "nombreGasto");
                 labelName.appendChild(labelNameContent);
 
@@ -65,44 +54,7 @@
 
                 divCaja.appendChild(inputNumber);
 
-                document.getElementById("formDom").insertBefore(divCaja, document.getElementById("btnServiciosPublicos"));
-            })
-        </script>
-
-        <script>
-            document.getElementById("btnOtrosGastos").addEventListener("click", function () {
-                var divCaja = document.createElement("div");
-                divCaja.setAttribute("class", "campo");
-                divCaja.setAttribute("id", "divInput");
-
-                var labelName = document.createElement("label");
-                var labelNameContent = document.createTextNode("Descripcion");
-                labelName.setAttribute("for", "descripcion");
-                labelName.appendChild(labelNameContent);
-
-                divCaja.appendChild(labelName);
-
-                var inputName = document.createElement("input");
-                inputName.setAttribute("type", "string");
-                inputName.setAttribute("name", "descripcion");
-
-                divCaja.appendChild(inputName);
-
-                var labelNumber = document.createElement("label");
-                var labelNumberContent = document.createTextNode("Costo");
-                labelNumber.setAttribute("id", "secondLabel");
-                labelNumber.setAttribute("for", "costo");
-                labelNumber.appendChild(labelNumberContent);
-
-                divCaja.appendChild(labelNumber);
-
-                var inputNumber = document.createElement("input");
-                inputNumber.setAttribute("type", "number");
-                inputNumber.setAttribute("name", "costo");
-
-                divCaja.appendChild(inputNumber);
-
-                document.getElementById("formDom").insertBefore(divCaja, document.getElementById("btnOtrosGastos"));
+                document.getElementById("formDom").insertBefore(divCaja, document.getElementById("btnGastos"));
             })
         </script>
     </form>
