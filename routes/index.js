@@ -10,5 +10,7 @@ module.exports = () => {
     router.get("/presupuesto/nuevo", presupuestoController.formularioNuevoPresupuesto);
     router.post("/presupuesto/nuevo", presupuestoController.agregarPresupuesto);
     
+    router.get("/presupuesto/:url", presupuestoController.mostrarPresupuesto);
+    
     return router;
 };

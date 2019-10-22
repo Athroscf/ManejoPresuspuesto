@@ -25,3 +25,17 @@ exports.agregarPresupuesto = async (req, res) => {
     // Redireccionar
     res.redirect(`/Presupuesto/${ presupuesto.url }`);
 }
+
+exports.mostrarPresupuesto = async (req, res, next) => {
+    const presupuesto = await Presupuesto.findOne({ url: req.params.url });
+
+    // Si no encuentra el presupuesto
+    if (!presupuesto) return next();
+
+    // Si encuentra el presupuesto
+    res.render("presupuesto", {
+        nombrePagina: presupuesto.titulo,
+        barra: true,
+        presupuesto
+    });
+};
