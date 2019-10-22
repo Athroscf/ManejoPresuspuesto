@@ -5,7 +5,7 @@ const presupuestoController = require('../controllers/presupuestoController');
 
 module.exports = () => {
 
-    router.get("/", homeController.mostrarHome);
+    router.get("/", homeController.mostrarPrespuestos);
     
     router.get("/presupuesto/nuevo", presupuestoController.formularioNuevoPresupuesto);
     router.post("/presupuesto/nuevo", presupuestoController.agregarPresupuesto);

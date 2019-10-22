@@ -1,21 +1,20 @@
 <main class="lista-vacantes">
-    <h2>Lista de vacantes</h2>
+    <h2>Lista de presupuestos</h2>
 
+    {{#each presupuesto}}
     <div class="vacante">
         <div class="caja">
-            <h3>Presupuesto Personal</h3>
-            <p class="puesto">octubre 2019</p>
+            <h3>{{titulo}}</h3>
+            <p class="etiqueta">Ingresos</p>
+            <p class="nombre">{{ingresos}}</p>
         </div>
         <div class="caja">
-            <p class="etiqueta">Presupuesto Inicial</p>
-            <p class="nombre">L. 20,000.00</p>
+            <p class="etiqueta">Ahorros Esperados</p>
+            <p class="nombre contrato">{{ahorrosEsperados}}</p>
         </div>
-        <div class="caja">
-            <p class="etiqueta">Gastos Presupuestados</p>
-            <p class="nombre contrato">L. 13,000.00</p>
-        </div>
-        <div class="caja centrar-verticalmente">
-            <a href="#" class="btn btn-verde">Ver detalles</a>
+        <div class="caja centrar-vertical">
+            <a href="/presupuesto/{{url}}" class="btn btn-verde">Mas informacion</a>
         </div>
     </div>
+    {{/each}}
 </main>
