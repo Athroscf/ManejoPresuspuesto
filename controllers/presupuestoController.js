@@ -39,3 +39,36 @@ exports.mostrarPresupuesto = async (req, res, next) => {
         presupuesto
     });
 };
+
+// Mostrar formulario de Editar
+exports.formularioEditarPresupuesto = async (req, res, next) => {
+    const presupuesto = await Presupuesto.findOne({ url: req.params.url });
+
+    // Si no existe
+    if (!presupuesto) return next();
+
+    // Si existe
+    res.render("editarPresupuesto", {
+        nombrePagina: `Editar ${presupuesto.titulo}`,
+        barra: true,
+        presupuesto
+    });
+};
+
+// Guardar lo que se edito en el presupuesto
+exports.editarPresupuesto = async (req, res, next) => {
+    const presupuestoEditado = req.body;
+
+    console.log(presupuestoEditado);
+
+    const presupuesto = await Presupuesto.findOneAndUpdate(
+        { url: req.params.url },
+        presupuestoEditado,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
+
+    res.redirect(`/presupuesto/${presupuesto.url}`);
+};

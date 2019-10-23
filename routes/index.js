@@ -12,5 +12,8 @@ module.exports = () => {
     
     router.get("/presupuesto/:url", presupuestoController.mostrarPresupuesto);
     
+    router.get("/presupuesto/editar/:url", presupuestoController.formularioEditarPresupuesto);
+    router.post("/presupuesto/editar/url", presupuestoController.editarPresupuesto);
+    
     return router;
 };

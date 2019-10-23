@@ -1,0 +1,33 @@
+<main class="contenedor">
+    <form action="/presupuesto/editar/{{presupuesto.url}}" method="post" class="default-form">
+        <h3>Informacion de {{prespuesto.titulo}}</h3>
+
+        <div class="campo">
+            <label for="titulo">Titulo</label>
+            <input type="text" name="titulo" placeholder="Mi Presupuesto" value={{presupuesto.titulo}}>
+        </div>
+        <div class="campo">
+            <label for="ingresos">Ingresos</label>
+            <input type="text" name="ingresos" placeholder="30000" value={{presupuesto.ingresos}}>
+        </div>
+        <div class="campo">
+            <label for="ahorrosEsperados">Ahorros Esperados</label>
+            <input type="text" name="ahorrosEsperados" placeholder="10000" value={{presupuesto.ahorrosEsperados}}>
+        </div>
+        <h3>Gastos</h3>
+
+        {{#each presupuesto.gastos}}
+        <div class="campo">
+            <label for="nombreGasto">Descripcion</label>
+            <input type="text" name="nombreGasto" placeholder="10000" value={{presupuesto.gastos.nombreGasto}}>
+
+            <label for="cantidad">Costo</label>
+            <input type="text" name="cantidad" placeholder="10000" value={{presupuesto.gastos.cantidad}}>
+        </div>
+        {{/each}}
+        
+        <div class="campo centrar-horizontal">
+            <input type="submit" value="Guardar Presupuesto" class="btn btn-azul">
+        </div>
+    </form>
+</main>
