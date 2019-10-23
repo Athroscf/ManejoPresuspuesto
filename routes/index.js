@@ -31,7 +31,19 @@ module.exports = () => {
                 .isEmpty(),
             check("email", "El correo electronico no es valido")
                 .isEmail()
-                .normalizeEmail()
+                .normalizeEmail(),
+            check("password", "La contraseña es requerida.")
+                .not()
+                .isEmpty(),
+                check("confirmpassword", "Debes confirmar tu contraseña")
+                .not()
+                .isEmpty(),
+                check(
+                    "confirmpassword",
+                    "Las contraseñas no coinciden"
+                ).custom((value, {
+                    req
+                }) => value === req.body.password)
         ],
         usuarioController.formularioCrearCuenta
     );

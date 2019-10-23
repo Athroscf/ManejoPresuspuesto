@@ -48,4 +48,14 @@ usuarioSchema.pre("save", function(next) {
     });
 });
 
+usuarioSchema.post("save", function(error, doc, next) {
+    if(error.name === "MongoError" && error.code === 1000) {
+        next(
+            "El correo electronico ya esta registrado en una cuenta"
+        );
+    } else {
+        next(error);
+    }
+});
+
 module.exports = mongoose.model("Usuario", usuarioSchema);
