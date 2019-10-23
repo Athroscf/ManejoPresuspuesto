@@ -7,3 +7,12 @@ exports.formularioCrearCuenta = (req, res) => {
         tagline: "Maneja tus presupuestos!"
     });
 };
+
+exports.crearUsuario = async (req, res, next) => {
+    // Crear usuario
+    const usuario = Usuario(req.body);
+
+    await usuario.save();
+
+    res.redirect("/crearCuenta");
+};
