@@ -6,10 +6,10 @@ module.exports = {
 
         if (categoria.length) {
             errors[categoria].forEach(error => {
-                html += `<div class="${categoria} alerta>${error}</div>`;
+                html += `<div class="${categoria} alerta">${error}</div>`;
             });
         }
 
         return (alerts.fn().html = html);
     }
-}
+};

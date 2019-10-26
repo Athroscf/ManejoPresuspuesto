@@ -4,6 +4,7 @@ const { check } = require("express-validator");
 const homeController = require("../controllers/homeController");
 const presupuestoController = require("../controllers/presupuestoController");
 const usuarioController = require("../controllers/usuarioController");
+const authController = require("../controllers/authController");
 
 module.exports = () => {
 
@@ -35,18 +36,20 @@ module.exports = () => {
             check("password", "La contraseña es requerida.")
                 .not()
                 .isEmpty(),
-                check("confirmpassword", "Debes confirmar tu contraseña")
+            check("confirmarPassword", "Debes confirmar tu contraseña")
                 .not()
                 .isEmpty(),
-                check(
-                    "confirmpassword",
-                    "Las contraseñas no coinciden"
-                ).custom((value, {
+            check("confirmarPassword", "Las contraseñas no coinciden")
+                .custom((value, {
                     req
                 }) => value === req.body.password)
         ],
-        usuarioController.formularioCrearCuenta
+        usuarioController.crearUsuario
     );
+
+    // Iniciar Sesion
+    router.get("/iniciarSesion", usuarioController.formularioIniciarSesion);
+    router.post("/iniciarSesion", authController.autenticarUsuario);
 
     return router;
 };

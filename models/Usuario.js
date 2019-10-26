@@ -37,7 +37,7 @@ usuarioSchema.pre("save", function(next) {
 
         if (err) return (next(err));
 
-        bcrypt.hash(user.password, salt, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
             
             if(err) return(next(err));
 
@@ -57,5 +57,27 @@ usuarioSchema.post("save", function(error, doc, next) {
         next(error);
     }
 });
+
+usuarioSchema.methods.compararPassword = function(candidatePassword) {
+    return bcrypt.compareSync(candidatePassword, this.password);
+};
+
+usuarioSchema.methods.comparePassword = function(candidatePassword) {
+    const user = this;
+
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
+            if (err) {
+                return reject(err);
+            }
+
+            if (!isMatch) {
+                return reject(false);
+            }
+
+            resolve(true);
+        });
+    }).catch();
+};
 
 module.exports = mongoose.model("Usuario", usuarioSchema);

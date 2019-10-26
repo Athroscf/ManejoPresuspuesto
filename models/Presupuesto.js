@@ -30,6 +30,11 @@ const presupuestoSchema = new mongoose.Schema({
     url: {
         type: String,
         lowercase: true
+    },
+    autor: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Usuarios",
+        required: "El autor es obligatorio"
     }
 });
 

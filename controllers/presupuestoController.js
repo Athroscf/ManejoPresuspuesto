@@ -16,11 +16,14 @@ exports.agregarPresupuesto = async (req, res) => {
 
     presupuesto.gastos[0] = nombreGasto;
     presupuesto.gastos[1] = cantidad;
-
+    presupuesto.autor = req.user._id;
+    
     console.log(presupuesto);
     console.log(req.body);
     // Guardar en la BD
-    await presupuesto.save();
+    await presupuesto.save(function (err, cb) {
+        console.log(err);
+    });
 
     // Redireccionar
     res.redirect(`/Presupuesto/${ presupuesto.url }`);

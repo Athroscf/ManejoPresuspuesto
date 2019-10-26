@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set("useCreateIndex", true);
 require("./config/db");
 const express = require("express");
 const expresshbs = require("express-handlebars");
@@ -9,6 +10,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
+const passport = require("./config/passport");
 
 // Habilitando el archivo de variables de entorno
 require("dotenv").config({ path: "variables.env" });
@@ -23,7 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.engine(
     "handlebars",
     expresshbs({
-        defaultLayout: "layout"
+        defaultLayout: "layout",
+        helpers: require("./helpers/handlebars")
     })
 );
 
@@ -44,6 +47,9 @@ app.use(
         store: new MongoStore({ mongooseConnection: mongoose.connection })
     })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 
