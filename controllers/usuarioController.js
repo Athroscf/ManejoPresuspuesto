@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Usuario = mongoose.model("Usuario");
 const { validationResult } = require("express-validator");
+const multer = require("multer");
+const shortid = require("shortid");
 
 exports.formularioCrearCuenta = (req, res) => {
     res.render("crearCuenta", {
@@ -51,3 +53,43 @@ exports.formularioIniciarSesion = (req, res) => {
         nombrePagina: "Iniciar sesion"
     });
 };
+
+exports.formularioEditarPerfil = (req, res) => {
+    res.render("editarPerfil", {
+        nombrePagina: "Edita tu perfil de usuario",
+        usuario: req.user,
+        cerrarSesion: true,
+        nommbre: req.user.nombre
+    });
+};
+
+exports.editarPerfil = async (req, res) => {
+    const usuario = await Usuario.findById(req.user._id);
+
+    usuario.nombre = req.body.nombre;
+    usuario.email = req.body.email;
+
+    if (req.body.password) {
+        usuario.password = req.body.password;
+    }
+
+    await usuario.save();
+
+    req.flash("correcto", ["Cambios almacenados correctamente"]);
+
+    res.redirect("/administrarPresupuestos");
+};
+
+exports.subirImagen = (req, res, next) => {
+    upload(req, res, function(error) {
+        if (error instanceof multer.MulterError) {
+            return next();
+        }
+    });
+    next();
+};
+
+// Configuracion multer
+const configuracionMulter = {};
+
+const upload = multer(configuracionMulter).single("imagen");

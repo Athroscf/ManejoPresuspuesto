@@ -4,41 +4,44 @@ const Presupuesto = mongoose.model("Presupuesto");
 exports.formularioNuevoPresupuesto = (req, res) => {
     res.render("nuevoPresupuesto", {
         nombrePagina: "Nuevo Presupuesto",
-        tagline: "Define tu presupuesto"
+        tagline: "Define tu presupuesto",
+        cerrarSesion: true,
+        nombre: req.user.nombre
     });
 };
     // "watch": "webpack --w --mode development",
 exports.agregarPresupuesto = async (req, res) => {
     const presupuesto = new Presupuesto(req.body);
 
-    const nombreGasto = [req.body.nombreGasto];
-    const cantidad = [req.body.cantidad];
-
-    presupuesto.gastos[0] = nombreGasto;
-    presupuesto.gastos[1] = cantidad;
+    presupuesto.gastos[0] = [req.body.nombreGasto];
+    presupuesto.gastos[1] = [req.body.cantidad];
     presupuesto.autor = req.user._id;
     
     console.log(presupuesto);
-    console.log(req.body);
     // Guardar en la BD
     await presupuesto.save(function (err, cb) {
         console.log(err);
     });
 
     // Redireccionar
-    res.redirect(`/Presupuesto/${ presupuesto.url }`);
+    res.redirect(`/presupuesto/${presupuesto.url}`);
 }
 
 exports.mostrarPresupuesto = async (req, res, next) => {
     const presupuesto = await Presupuesto.findOne({ url: req.params.url });
 
     // Si no encuentra el presupuesto
+    if (verificarUsuario) {
+        res.redirect("/iniciarSesion");
+    }
+
     if (!presupuesto) return next();
 
     // Si encuentra el presupuesto
     res.render("presupuesto", {
         nombrePagina: presupuesto.titulo,
-        barra: true,
+        cerrarSesion: true,
+        nombre: req.user.nombre,
         presupuesto
     });
 };
@@ -53,8 +56,9 @@ exports.formularioEditarPresupuesto = async (req, res, next) => {
     // Si existe
     res.render("editarPresupuesto", {
         nombrePagina: `Editar ${presupuesto.titulo}`,
-        barra: true,
-        presupuesto
+        presupuesto,
+        cerrarSesion: true,
+        nombre: req.user.nombre
     });
 };
 
@@ -74,4 +78,25 @@ exports.editarPresupuesto = async (req, res, next) => {
     );
 
     res.redirect(`/presupuesto/${presupuesto.url}`);
+};
+
+exports.eliminarPresupuesto = async (req, res) => {
+    const { id } = req.params;
+
+    const presupuesto = await Presupuesto.findById(id);
+
+    if(verificarUsuario(presupuesto, req.user)) {
+        presupuesto.remove();
+        res.status(200).send("Error al eliminar el presupuesto");
+    } else {
+        res.status(403).send("Error al eliminar el presupuesto");
+    }
+};
+
+const verificarUsuario = (presupuestos = {}, usuario = {}) => {
+    if(!presupuesto.autor.equals(usuario._id)) {
+        return false;
+    }
+
+    return true;
 };

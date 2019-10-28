@@ -8,15 +8,35 @@ const authController = require("../controllers/authController");
 
 module.exports = () => {
 
-    router.get("/", homeController.mostrarPrespuestos);
+    router.get(
+        "/",
+        authController.verificarUsuario,
+        homeController.mostrarPrespuestos);
     
-    router.get("/presupuesto/nuevo", presupuestoController.formularioNuevoPresupuesto);
-    router.post("/presupuesto/nuevo", presupuestoController.agregarPresupuesto);
+    router.get(
+        "/presupuesto/nuevo",
+        authController.verificarUsuario,
+        presupuestoController.formularioNuevoPresupuesto
+    );
+    router.post(
+        "/presupuesto/nuevo",
+        authController.verificarUsuario,
+        presupuestoController.agregarPresupuesto);
     
     router.get("/presupuesto/:url", presupuestoController.mostrarPresupuesto);
     
-    router.get("/presupuesto/editar/:url", presupuestoController.formularioEditarPresupuesto);
-    router.post("/presupuesto/editar/url", presupuestoController.editarPresupuesto);
+    router.get(
+        "/presupuesto/editar/:url",
+        authController.verificarUsuario,
+        presupuestoController.formularioEditarPresupuesto);
+    router.post(
+        "/presupuesto/editar/url",
+        authController.verificarUsuario,
+        presupuestoController.editarPresupuesto);
+
+    router.delete(
+        "/presupuesto/eliminar/:id",
+        presupuestoController.eliminarPresupuesto);
     
     // Rutas de usuario
     router.get("/crearCuenta", usuarioController.formularioCrearCuenta);
@@ -51,5 +71,28 @@ module.exports = () => {
     router.get("/iniciarSesion", usuarioController.formularioIniciarSesion);
     router.post("/iniciarSesion", authController.autenticarUsuario);
 
+    //Cerrar Sesion
+    router.get("/cerrarSesion", authController.cerrarSesion);
+    
+    // Editar perfil
+    router.get(
+        "/editarPerfil",
+        authController.verificarUsuario,
+        usuarioController.formularioEditarPerfil
+    );
+    router.post(
+        "/editarPerfil",
+        authController.verificarUsuario,
+        usuarioController.subirImagen,
+        usuarioController.editarPerfil
+    );
+
+    //Administracion
+    router.get(
+        "/administrarPresupuestos",
+        authController.verificarUsuario,
+        authController.administrarPresupuestos
+    );
+    
     return router;
 };

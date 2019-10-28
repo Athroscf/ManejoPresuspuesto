@@ -1,0 +1,31 @@
+<main class="lista-vacantes">
+    <h2>Navegacion</h2>
+
+    <div class="botones separador">
+        <a href="/editarPerfil" class="btn btn-azul">Editar Perfil</a>
+    </div>
+
+    <h2>Tus presupuestos</h2>
+    <div class="panel-administracion">
+        {{#if presupuestos.length}}
+        {{#each presupuestos}}
+            <div class="vacante">
+                <div class="caja">
+                    <p class="puesto">{{titulo}}</p>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="/presupuesto/{{url}}" class="btn btn-verde">Ver mas</a>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="/presupuesto/editar/{{url}}" class="btn btn-amarillo">Editar</a>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="#" data-eliminar="{{id}}" class="btn btn-rojo">Eliminar</a>
+                </div>
+            </div>
+        {{/each}}
+        {{else}}
+        <p>Aun no tienes presupuestos</p>
+        {{/if}}
+    </div>
+</main>

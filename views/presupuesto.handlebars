@@ -1,19 +1,21 @@
 <div class="contenido-superior vacante contenido-superior">
     <div class="caja">
-        <p class="etiqueta">Titulo</p>
-        <p class="nombre">{{presupuesto.titulo}}</p>
-    </div>
-    <div class="caja">
-        <p class="etiqueta">Presupuesto</p>
+        <p class="etiqueta">Ingresos</p>
         <p class="nombre">{{presupuesto.ingresos}}</p>
     </div>
     <div class="caja">
         <p class="etiqueta">Ahorros Esperados</p>
         <p class="nombre">{{presupuesto.ahorrosEsperados}}</p>
     </div>
+    {{#each presupuesto.gastos}}
     <div class="caja">
-        <p class="etiqueta">Gasto</p>
-        <p class="nombre">{{presupuesto.gastos.nombreGasto}}</p>
+        <p class="etiqueta">{{presupuesto.gastos.nombreGasto}}</p>
+        <p class="nombre">{{presupuesto.gastos.cantidad}}</p>
+    </div>
+    {{/each}}
+    <div class="caja">
+        <p class="etiqueta">Resultante</p>
+        <p class="nombre">{{presupuesto.ingresos}}</p>
     </div>
 </div>
 

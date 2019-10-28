@@ -1,0 +1,23 @@
+<main class="contenedor">
+    <form action="/editarPerfil" method="post" class="default-form" enctype="multipart/form-data">
+        <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" placeholder="Monkey D. Luffy" value="{{usuario.nombre}}" required>
+        </div>
+        <div class="campo">
+            <label for="email">Correo electronico</label>
+            <input type="text" name="email" placeholder="luffy@grandline.op" value="{{usuario.email}}" required>
+        </div>
+        <div class="campo">
+            <label for="password">Contrasena</label>
+            <input type="text" name="password" placeholder="Tu contrasena">
+        </div>
+        <div class="campo">
+            <label for="imagen">Imagen de perfil</label>
+            <input type="file" name="imagen">
+        </div>
+        <div class="campo">
+            <input type="submit" value="Guardar cambios" class="btn btn-azul">
+        </div>
+    </form>
+</main>

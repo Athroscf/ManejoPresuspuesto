@@ -1,9 +1,17 @@
+import Axios from "axios";
+
 document.addEventListener("DOMContentLoaded", () => {
     // Limpiar alertas
     let alertas = document.querySelector(".alertas");
 
     if (alertas) {
         limpiarAlertas(alertas);
+    }
+
+    const listadoPresupuesto = document.querySelector(".panel-administracion");
+
+    if (listadoPresupuesto) {
+        listadoPresupuesto.addEventListener("click", accionesListado);
     }
 });
 
@@ -17,4 +25,48 @@ const limpiarAlertas = alertas => {
             clearInterval(interval);
         }
     }, 3000);
+};
+
+const accionesListado = e => {
+    e.preventDefault();
+
+    if (e.target.dataset.eliminar) {
+        Swal.fire({
+            title: 'Estas seguro de eliminar este presupuesto?',
+            text: "No podras deshacer esta accion!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.value) {
+                const url = `${location.origin}/presupuesto/eliminar/${e.target.dataset.eliminar}`;
+                
+                axios
+                    .delete(url, { params: url })
+                    .then(function(resupesta) {
+                        if (resupesta.status == 200) {
+                            Swal.fire(
+                                "Eliminado!",
+                                resupesta.data,
+                                "success"
+                            );
+
+                            e.target.parentElement.parentElement.parentElement.removeChild(
+                                e.target.parentElement.parentElement
+                            );
+                        }
+                })
+                .catch(() => 
+                    Swal.fire({
+                        type: "error",
+                        title: "Error",
+                        text: "Hubo un error al eliminar el presupuesto"
+                    })
+                )
+            }
+        });
+    }
 };
