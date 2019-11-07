@@ -1,4 +1,5 @@
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", () => {
     // Limpiar alertas
@@ -8,10 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
         limpiarAlertas(alertas);
     }
 
-    const listadoPresupuesto = document.querySelector(".panel-administracion");
+    console.log("----------------------------------------");
+    console.log("Entro a DOMLoaded");
+    console.log("----------------------------------------");
 
-    if (listadoPresupuesto) {
-        listadoPresupuesto.addEventListener("click", accionesListado);
+    const presupuestoListado = document.querySelector(".panel-administracion");
+
+    if (presupuestoListado) {
+        presupuestoListado.addEventListener("click", accionesListado);
     }
 });
 
@@ -28,13 +33,18 @@ const limpiarAlertas = alertas => {
 };
 
 const accionesListado = e => {
-    e.preventDefault();
+    console.log("----------------------------------------");
+    console.log("Entro a accionesListado");
+    console.log("----------------------------------------");
 
+    e.preventDefault();
+    
     if (e.target.dataset.eliminar) {
+        console.log(e);
         Swal.fire({
             title: 'Estas seguro de eliminar este presupuesto?',
             text: "No podras deshacer esta accion!",
-            type: 'warning',
+            type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -43,10 +53,12 @@ const accionesListado = e => {
         }).then((result) => {
             if (result.value) {
                 const url = `${location.origin}/presupuesto/eliminar/${e.target.dataset.eliminar}`;
-                
-                axios
-                    .delete(url, { params: url })
-                    .then(function(resupesta) {
+
+                Axios
+                    .delete(url, {
+                        params: url
+                    })
+                    .then(function (resupesta) {
                         if (resupesta.status == 200) {
                             Swal.fire(
                                 "Eliminado!",
@@ -58,15 +70,17 @@ const accionesListado = e => {
                                 e.target.parentElement.parentElement
                             );
                         }
-                })
-                .catch(() => 
-                    Swal.fire({
-                        type: "error",
-                        title: "Error",
-                        text: "Hubo un error al eliminar el presupuesto"
                     })
-                )
+                    .catch(() =>
+                        Swal.fire({
+                            type: "error",
+                            title: "Error",
+                            text: "Hubo un error al eliminar el presupuesto"
+                        })
+                    );
             }
         });
+    } else if (e.target.tagName === "A") {
+        window.location.href = e.target.href;
     }
 };

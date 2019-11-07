@@ -18,13 +18,16 @@ const presupuestoSchema = new mongoose.Schema({
         type: Number,
         required: "Es necesario ingresar la cantidad que espera ahorrar"
     },
+    fecha: {
+        type: Date
+    },
     gastos: [
         {
             nombreGasto: String,
             cantidad: Number
         }
     ],
-    resultadoFinDeMes: {
+    resultado: {
         type: Number
     },
     url: {
@@ -46,5 +49,8 @@ presupuestoSchema.pre("save", function (next) {
 
     next();
 });
+
+// Generar indice
+presupuestoSchema.index({ titulo: "text" });
 
 module.exports = mongoose.model("Presupuesto", presupuestoSchema);

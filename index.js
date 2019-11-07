@@ -11,6 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const passport = require("./config/passport");
+const createError = require("http-errors");
 
 // Habilitando el archivo de variables de entorno
 require("dotenv").config({ path: "variables.env" });
@@ -54,10 +55,27 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.messages = flash.messages;
+    res.locals.messages = req.flash();
     next();
-})
+});
 
 app.use("/", router());
+
+app.use((req, res, next) => {
+    next(createError(404, "La pagina que has solicitado no existe"));
+});
+
+app.use((error, req, res, next) => {
+    const status = error.status || 500;
+
+    res.locals.status = status;
+    res.status(status);
+
+    res.render("error", {
+        status,
+        messages: "No encontrado",
+        layout: "errorcito"
+    });
+});
 
 app.listen(process.env.PORT);

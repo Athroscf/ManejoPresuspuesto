@@ -5,8 +5,6 @@ exports.mostrarPrespuestos = async (req, res) => {
     //Obtener los presupuestos
     const presupuesto = await Presupuesto.find();
 
-    console.log(presupuesto);
-
     // Si no se encuentra prespuestos
     if (!presupuesto) return next();
 

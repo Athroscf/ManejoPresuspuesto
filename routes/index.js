@@ -30,7 +30,7 @@ module.exports = () => {
         authController.verificarUsuario,
         presupuestoController.formularioEditarPresupuesto);
     router.post(
-        "/presupuesto/editar/url",
+        "/presupuesto/editar/:url",
         authController.verificarUsuario,
         presupuestoController.editarPresupuesto);
 
@@ -74,6 +74,27 @@ module.exports = () => {
     //Cerrar Sesion
     router.get("/cerrarSesion", authController.cerrarSesion);
     
+    // Reestablecer password del usuario
+    router.get(
+        "/reestablecerPassword",
+        authController.formularioReestablecerPassword
+    );
+    router.post(
+        "/reestablecerPassword",
+        authController.enviarToken);
+
+    router.get(
+        "/reestablecerPassword/:token",
+        authController.formularioNuevaPassword
+    );
+    router.post(
+        "/reestablecerPassword/:token",
+        authController.guardarNuevaPassword
+    );
+
+    // Buscador
+    router.post("/buscador", presupuestoController.buscarPresupuesto);
+
     // Editar perfil
     router.get(
         "/editarPerfil",
