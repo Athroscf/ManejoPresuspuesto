@@ -8,11 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (alertas) {
         limpiarAlertas(alertas);
     }
-
-    console.log("----------------------------------------");
-    console.log("Entro a DOMLoaded");
-    console.log("----------------------------------------");
-
+    
     const presupuestoListado = document.querySelector(".panel-administracion");
 
     if (presupuestoListado) {
@@ -33,10 +29,6 @@ const limpiarAlertas = alertas => {
 };
 
 const accionesListado = e => {
-    console.log("----------------------------------------");
-    console.log("Entro a accionesListado");
-    console.log("----------------------------------------");
-
     e.preventDefault();
     
     if (e.target.dataset.eliminar) {

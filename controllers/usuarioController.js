@@ -16,7 +16,6 @@ exports.crearUsuario = async (req, res, next) => {
     const errores = validationResult(req);
     const erroresArray = [];
 
-    console.log(req.body);
     if (!errores.isEmpty()) {
         errores.array().map(error => erroresArray.push(error.msg));
 

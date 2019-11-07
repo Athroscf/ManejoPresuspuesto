@@ -22,7 +22,6 @@ exports.agregarPresupuesto = async (req, res) => {
             nombreGasto: gasto.nombreGasto,
             cantidad: gasto.cantidad
         };
-        console.log(gastos);
         presupuesto.gastos.push(gastos);
     })
     
@@ -73,8 +72,6 @@ exports.formularioEditarPresupuesto = async (req, res, next) => {
 // Guardar lo que se edito en el presupuesto
 exports.editarPresupuesto = async (req, res, next) => {
     const presupuestoEditado = req.body;
-
-    console.log(presupuestoEditado);
 
     const presupuesto = await Presupuesto.findOneAndUpdate(
         { url: req.params.url },

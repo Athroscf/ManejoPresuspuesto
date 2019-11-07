@@ -12,7 +12,6 @@ passport.use(
         },
         async (email, password, done) => {
             const usuario = await Usuario.findOne({ email });
-            console.log(usuario);
 
             // Si no existe el usuario
             if (!usuario) {
